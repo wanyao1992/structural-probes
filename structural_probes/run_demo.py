@@ -19,9 +19,14 @@ import seaborn as sns
 sns.set(style="darkgrid")
 mpl.rcParams['agg.path.chunksize'] = 10000
 
-from structural_probes import (
-    data, model, probe, regimen, reporter, task, loss, run_experiment,
-)
+try:
+    from structural_probes import (
+        data, model, probe, regimen, reporter, task, loss, run_experiment,
+    )
+except ImportError:
+    from . import (
+        data, model, probe, regimen, reporter, task, loss, run_experiment,
+    )
 
 from pytorch_pretrained_bert import BertTokenizer, BertModel
 
@@ -169,6 +174,10 @@ if __name__ == '__main__':
     argp.add_argument('--seed', default=0, type=int,
                       help='sets all random seeds for (within-machine) reproducibility')
     cli_args = argp.parse_args()
+    # cli_args.results_dir = 'example/demo-bert.yaml'
+    print(cli_args)
+    exit()
+
     if cli_args.seed:
         np.random.seed(cli_args.seed)
         torch.manual_seed(cli_args.seed)
