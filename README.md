@@ -15,7 +15,7 @@ See the [blog post on structural probes](https://nlp.stanford.edu//~johnhew//str
 1. Clone the repository.
 
         git clone https://github.com/john-hewitt/structural-probes/
-        cd structural-probes
+        cd structural_probes
         
 1. [Optional] Construct a virtual environment for this project. Only `python3` is supported.
 
@@ -40,7 +40,7 @@ See the [blog post on structural probes](https://nlp.stanford.edu//~johnhew//str
 
 1. Test a pre-trained structural probe on `BERTlarge` with our demo script!
 
-        printf "The chef that went to the stores was out of food" | python structural-probes/run_demo.py example/demo-bert.yaml
+        printf "The chef that went to the stores was out of food" | python structural_probes/run_demo.py example/demo-bert.yaml
    
    The script will make a new directory under `example/results/` and store some neat visualizations there.
    It will use pre-trained probe parameters stored at `example/data`, downloaded with `download_example.sh`.
@@ -48,7 +48,7 @@ See the [blog post on structural probes](https://nlp.stanford.edu//~johnhew//str
 
 1. Run an experiment using an example experiment configuration, and take a look at the resultant reporting!
 
-        python structural-probes/run_experiment.py example/config/prd_en_ewt-ud-sample.yaml
+        python structural_probes/run_experiment.py example/config/prd_en_ewt-ud-sample.yaml
         
    The path to a new directory containing the results of the experiment will be in the first few lines of the logging output of the script. Once you go there, you can see dev-pred*.png: some distance matrices printed by the script, as well as files containing the quantitative reporting results, like `dev.uuas`, the unlabeled undirected attachment score. These will all be very low, since the probe was trained on very little data!
 
@@ -61,15 +61,15 @@ Also make sure you've installed all dependencies.
 One is a distance probe on the 16th hidden layer of BERT large, and the other is a depth probe on the same layer.
 The configuration file `example/demo-bert.yaml` has the right paths already plugged in; just pipe text into the demo file, as follows:
 
-     printf "The chef that went to the stores was out of food" | python structural-probes/run_demo.py example/demo-bert.yaml
+     printf "The chef that went to the stores was out of food" | python structural_probes/run_demo.py example/demo-bert.yaml
 
 If you want to run multiple sentences at once, you can either do so via `printf`:
      
-     printf "The chef that went to the stores was out of food\nThe chef that went to the stores and talked to the parents was out of food" | python structural-probes/run_demo.py example/demo-bert.yaml
+     printf "The chef that went to the stores was out of food\nThe chef that went to the stores and talked to the parents was out of food" | python structural_probes/run_demo.py example/demo-bert.yaml
      
 Or piping/redirecting a file to stdin:
 
-     cat my_set.txt | python structural-probes/run_demo.py example/demo-bert.yaml
+     cat my_set.txt | python structural_probes/run_demo.py example/demo-bert.yaml
      
 The script will print out a directory to which it has written visualizations of both parse depths and parse distances as predicted by a distance probe and a depth probe.
 You'll also see `demo.tikz`, which is a bit of LaTeX for the `tikz-dependency` package.

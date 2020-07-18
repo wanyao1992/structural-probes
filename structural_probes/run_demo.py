@@ -167,16 +167,16 @@ def report_on_stdin(args):
 
 if __name__ == '__main__':
     argp = ArgumentParser()
-    argp.add_argument('experiment_config')
+    argp.add_argument('--experiment_config', default='../example/demo-bert.yaml')
     argp.add_argument('--results-dir', default='',
                       help='Set to reuse an old results dir; '
                            'if left empty, new directory is created')
     argp.add_argument('--seed', default=0, type=int,
                       help='sets all random seeds for (within-machine) reproducibility')
     cli_args = argp.parse_args()
-    # cli_args.results_dir = 'example/demo-bert.yaml'
+    cli_args.experiment_config = '../example/demo-bert.yaml'
     print(cli_args)
-    exit()
+    # exit()
 
     if cli_args.seed:
         np.random.seed(cli_args.seed)
