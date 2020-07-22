@@ -225,7 +225,7 @@ def setup_new_experiment_dir(args, yaml_args, reuse_results_path):
 
 if __name__ == '__main__':
     argp = ArgumentParser()
-    argp.add_argument('experiment_config')
+    # argp.add_argument('experiment_config')
     argp.add_argument('--results-dir', default='',
                       help='Set to reuse an old results dir; '
                            'if left empty, new directory is created')
@@ -237,6 +237,8 @@ if __name__ == '__main__':
     argp.add_argument('--seed', default=0, type=int,
                       help='sets all random seeds for (within-machine) reproducibility')
     cli_args = argp.parse_args()
+    cli_args.experiment_config = 'example/config/pad_en_ewt-ud-sample.yaml'
+
     if cli_args.seed:
         np.random.seed(cli_args.seed)
         torch.manual_seed(cli_args.seed)

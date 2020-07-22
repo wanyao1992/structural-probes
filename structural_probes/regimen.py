@@ -62,7 +62,8 @@ class ProbeRegimen:
                 self.optimizer.zero_grad()
                 observation_batch, label_batch, length_batch, _ = batch
                 word_representations = model(observation_batch)
-                predictions = probe(word_representations)
+                # bert/emnlo repr
+                predictions = probe(word_representations) # 1) distance
                 batch_loss, count = loss(predictions, label_batch, length_batch)
                 batch_loss.backward()
                 epoch_train_loss += batch_loss.detach().cpu().numpy() * count.detach().cpu().numpy()
