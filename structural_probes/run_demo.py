@@ -122,13 +122,16 @@ def report_on_stdin(args):
 
     # Define the distance probe
     distance_probe = probe.TwoWordPSDProbe(args)
-    distance_probe.load_state_dict(torch.load(args['probe']['distance_params_path'], map_location=args['device']))
+    distance_params = torch.load(args['probe']['distance_params_path'], map_location=args['device'])
+    distance_probe.load_state_dict(distance_params)
 
     # Define the depth probe
     depth_probe = probe.OneWordPSDProbe(args)
-    depth_probe.load_state_dict(torch.load(args['probe']['depth_params_path'], map_location=args['device']))
+    depth_params = torch.load(args['probe']['depth_params_path'], map_location=args['device'])
+    depth_probe.load_state_dict(depth_params)
 
-    for index, line in tqdm(enumerate(sys.stdin), desc='[demoing]'):
+    # for index, line in tqdm(enumerate(sys.stdin), desc='[demoing]'):
+    for index, line in tqdm(enumerate(["The chef that went to the stores was out of food", ]), desc='[demoing]'):
         # Tokenize the sentence and create tensor inputs to BERT
         untokenized_sent = line.strip().split()
         tokenized_sent = tokenizer.wordpiece_tokenizer.tokenize('[CLS] ' + ' '.join(line.strip().split()) + ' [SEP]')
@@ -167,16 +170,16 @@ def report_on_stdin(args):
 
 if __name__ == '__main__':
     argp = ArgumentParser()
-    argp.add_argument('experiment_config')
+    # argp.add_argument('experiment_config')
     argp.add_argument('--results-dir', default='',
                       help='Set to reuse an old results dir; '
                            'if left empty, new directory is created')
     argp.add_argument('--seed', default=0, type=int,
                       help='sets all random seeds for (within-machine) reproducibility')
     cli_args = argp.parse_args()
-    # cli_args.results_dir = 'example/demo-bert.yaml'
-    print(cli_args)
-    exit()
+    cli_args.experiment_config = 'example/demo-bert.yaml'
+    # print(cli_args)
+    # exit()
 
     if cli_args.seed:
         np.random.seed(cli_args.seed)
